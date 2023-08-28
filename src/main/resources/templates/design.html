@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Doza Cloud</title>
+  <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+
+<body>
+<center><h1>Design your car!</h1>
+<img th:src="@{/images/DozaCloud.jpg}"/>
+
+<form method="POST" th:object="${car}"> <div class="grid">
+
+  <div class="completion-group" id="engines"> <h3>Designate your engine:</h3>
+    <div th:each="completion : ${engine}">
+      <input th:field="*{completionList}" type="checkbox" th:value="${completion.id}"/>
+      <span th:text="${completion.name}">INGREDIENT</span><br/> </div>
+  </div>
+
+  <div class="completion-group" id="gearboxes"> <h3>Pick your gearbox:</h3>
+    <div th:each="completion : ${gearbox}">
+      <input th:field="*{completionList}" type="checkbox" th:value="${completion.id}"/>
+      <span th:text="${completion.name}">INGREDIENT</span><br/>
+    </div> </div>
+
+  <div class="completion-group" id="body types"> <h3>Choose your bodytype:</h3>
+    <div th:each="completion : ${bodytype}">
+      <input th:field="*{completionList}" type="checkbox" th:value="${completion.id}"/>
+      <span th:text="${completion.name}">INGREDIENT</span><br/> </div>
+  </div>
+
+  <div class="completion-group" id="interiors"> <h3>Determine your interior:</h3>
+    <div th:each="completion : ${interior}">
+      <input th:field="*{completionList}" type="checkbox" th:value="${completion.id}"/>
+      <span th:text="${completion.name}">INGREDIENT</span><br/> </div>
+  </div>
+
+  <div class="completion-group" id="panoramic roofs"> <h3>Select your panoramicroof:</h3>
+    <div th:each="completion : ${panoramicroof}">
+      <input th:field="*{completionList}" type="checkbox" th:value="${completion.id}"/>
+      <span th:text="${completion.name}">INGREDIENT</span>
+      <br/>
+    </div>
+  </div> </div>
+
+  <div>
+    <h3>Name your car creation:</h3>
+    <input type="text" th:field="*{name}"/>
+    <br/>
+    <button>Submit Your Car</button>
+  </div> </form>
+</center>
+</body>
+</html>
