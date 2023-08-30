@@ -11,5 +11,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CarRepository extends CrudRepository<Car, Long> {
-    Page<Car> findAll(PageRequest page);
 }

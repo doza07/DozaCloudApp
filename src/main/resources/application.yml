@@ -1,9 +1,10 @@
-spring:
-  security:
-oauth2:
-  client:
-registration:
-  facebook:
-clientId:
-  <facebook client id> clientSecret:
-    <facebook client secret> scope: email, public_profile
+#spring:
+#  security:
+#oauth2:
+#  client:
+#registration:
+#  facebook:
+#clientId:
+#  <facebook client id> clientSecret:
+#    <facebook client secret> scope: email, public_profile
+
