@@ -7,17 +7,15 @@ import com.doza.cloud.DozaCloud.models.CarOrder;
 import com.doza.cloud.DozaCloud.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-
 import javax.validation.Valid;
-import java.security.Principal;
+
 
 @Slf4j
 @Controller
@@ -53,6 +51,49 @@ public class OrderController {
         orderRepository.save(order);
         sessionStatus.setComplete();
         return "redirect:/";
+    }
+
+    @ResponseBody
+    @PatchMapping(path = "/{orderId}", consumes = "application/json")
+    public CarOrder patchOrder(@PathVariable("orderId") Integer orderId,
+                               @RequestBody CarOrder patch) {
+        CarOrder order = orderRepository.findById(orderId).get();
+        if (patch.getDeliveryName() != null) {
+            order.setDeliveryName(patch.getDeliveryName());
+        }
+        if (patch.getDeliveryStreet() != null) {
+            order.setDeliveryStreet(patch.getDeliveryStreet());
+        }
+        if (patch.getDeliveryCity() != null) {
+            order.setDeliveryCity(patch.getDeliveryCity());
+        }
+        if (patch.getDeliveryState() != null) {
+            order.setDeliveryState(patch.getDeliveryState());
+        }
+        if (patch.getDeliveryZip() != null) {
+            order.setDeliveryZip(patch.getDeliveryZip());
+        }
+        if (patch.getCcNumber() != null) {
+            order.setCcNumber(patch.getCcNumber());
+        }
+        if (patch.getCcExpiration() != null) {
+            order.setCcExpiration(patch.getCcExpiration());
+        }
+        if (patch.getCcCVV() != null) {
+            order.setCcCVV(patch.getCcCVV());
+        }
+        return orderRepository.save(order);
+    }
+
+
+    @DeleteMapping("/{orderId}")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOrder(@PathVariable("orderId") Integer orderId) {
+        try { orderRepository.deleteById(orderId);
+        } catch (EmptyResultDataAccessException e) {
+            e.printStackTrace();
+        }
     }
 
 }
